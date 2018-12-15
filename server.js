@@ -7,16 +7,16 @@ app.use(express.static("."));
 app.get('/', function (req, res) {
     res.redirect('index.html');
 });
-server.listen(8080);
-console.log("server listening on port 3000");
+server.listen(8000);
 
 
 
 
 
 
-var m = Math.round((Math.random() * 20) + 13)
-var n = Math.round((Math.random() * 20) + 13)
+
+var m = 30;
+var n = 30;
 matrix = []
 function getRandInt(max) {
     return Math.round(Math.random() * Math.floor(max))
@@ -75,7 +75,6 @@ for (var y = 0; y < matrix.length; y++) {
 
 setInterval(drawServerayin, 100);
 function drawServerayin() {
-    console.log(matrix);
     for (var i in grassArr) {
         grassArr[i].mult()
     }
@@ -107,6 +106,7 @@ function drawServerayin() {
         ocArr[i].mult()
         ocArr[i].die()
     }
+    io.sockets.emit("matrix", matrix)
 }
 
 
