@@ -33,10 +33,11 @@ module.exports = class Xotaker extends LivingCreature {
         return super.chooseCell(ch);
     }
 
-    mult() {
+    mult(a) {
         var arr = this.chooseCell(0);
         var empty = arr[Math.round(Math.random() * arr.length)] 
-        if (empty && this.energy > 10) {
+        xotakerBorn++
+        if (empty && this.energy > a) {
             var newX = empty[0]
             var newY = empty[1]
             matrix[newY][newX] = 2
@@ -81,8 +82,8 @@ module.exports = class Xotaker extends LivingCreature {
         }
     }
 
-    die() {
-        if (this.energy <= 0) {
+    die(a) {
+        if (this.energy <= a) {
             matrix[this.y][this.x] = 0
             for (var i in xotakerArr) {
                 if (xotakerArr[i].x == this.x && xotakerArr[i].y == this.y) {

@@ -2,13 +2,14 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var fs = require('fs');
 
 app.use(express.static("."));
 app.get('/', function (req, res) {
     res.redirect('index.html');
 });
 server.listen(8000);
-
+var fs = require ("fs");
 
 
 
@@ -28,9 +29,11 @@ for (var y = 0; y < m; y++) {
         matrix[y].push(getRandInt(6))
     }
 }
+grassesBorn = 0;
+xotakerBorn = 0;
+gishatichBorn = 0;
 
-
-
+weather = ["dzmer", "garun", "amar", "ashun"];
 
 
 grassArr = [];
@@ -38,6 +41,7 @@ xotakerArr = [];
 gishatichArr = [];
 arjArr = [];
 ocArr = [];
+eghanak = "dzmer";
 
 var Grass = require("./grass.js")
 var Xotaker = require("./xotaker.js")
@@ -73,18 +77,48 @@ for (var y = 0; y < matrix.length; y++) {
 
 
 
-setInterval(drawServerayin, 100);
+var a = setInterval(drawServerayin, 100);
+
+time = 0
 function drawServerayin() {
-    for (var i in grassArr) {
-        grassArr[i].mult()
+    time++
+    if (time % 40 < 10) {
+        eghanak = weather[1];
     }
+    else if (time % 40 < 20) {
+        eghanak = weather[2];
+    }
+    else if (time % 40 < 30) {
+        eghanak = weather[3];
+    }
+    else if (time % 40 < 40) {
+        eghanak = weather[0];
+    }
+    console.log(eghanak);
+
+
+    for (var i in grassArr) {
+        if (eghanak == "garun" || eghanak == "amar") {
+            grassArr[i].mult(3);
+        }
+        else if (eghanak == "ashun" || eghanak == "dzmer") {
+            grassArr[i].mult(4);
+        }
+    }
+
 
 
     for (var i in xotakerArr) {
         xotakerArr[i].eat()
         xotakerArr[i].move()
-        xotakerArr[i].mult()
-        xotakerArr[i].die()
+        if (eghanak == "garun" || eghanak == "amar") {
+            xotakerArr[i].mult(10)
+            xotakerArr[i].die(0)
+        }
+        else if (eghanak == "ashun" || eghanak == "dzmer") {
+            xotakerArr[i].mult(8)
+            xotakerArr[i].die(2)
+        }
     }
     for (var i in gishatichArr) {
         gishatichArr[i].eat()
@@ -106,7 +140,27 @@ function drawServerayin() {
         ocArr[i].mult()
         ocArr[i].die()
     }
-    io.sockets.emit("matrix", matrix)
+    io.sockets.emit("matrix", [matrix,eghanak])
 }
 
+var statistics = { "a": [] };
+setInterval(function () {
+    statistics.a.push({
+        "Grassesborn": grassesBorn,
+        "Xotakerborn": xotakerBorn,
+        "Gishatichborn": gishatichBorn,
+    })
 
+    fs.writeFile("statistics.json", JSON.stringify(statistics), function (err) {
+        if (err) throw err;
+    })
+}, 13000);
+
+
+io.on('connection', function (socket) {
+
+    socket.on("stop", function () {
+        clearInterval(a);
+    });
+ });
+ 

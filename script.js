@@ -3,7 +3,7 @@ var socket = io();
 
 
 
-
+var eghanak = "dzmer";
 
 var m = 30;
 var n = 30;
@@ -15,16 +15,29 @@ function setup() {
     background('#33FFFF');
 
 }
+var p = document.getElementById("Seasons");
 
-
-function drawMatrix(matrix) {
+function drawMatrix(arr) {
+    var matrix = arr[0];
+    var eghanak = arr[1]; 
+    p.innerHTML = eghanak;
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
-                fill("green");
+                if (eghanak == "garun" || eghanak == "amar") {
+                    fill("green");
+                }
+                else if (eghanak == "ashun" || eghanak == "dzmer") {
+                    fill("white");
+                }
             }
             else if (matrix[y][x] == 2) {
-                fill("yellow");
+                if (eghanak == "garun" || eghanak == "amar") {
+                    fill("yellow");
+                }
+                else if (eghanak == "ashun" || eghanak == "dzmer") {
+                    fill("black");
+                }
             }
             else if (matrix[y][x] == 3) {
                 fill("red");
@@ -47,5 +60,5 @@ function drawMatrix(matrix) {
         }
     }
 }
-    socket.on("matrix", drawMatrix);
+socket.on("matrix", drawMatrix);
 

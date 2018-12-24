@@ -1,7 +1,7 @@
 var LivingCreature = require("./LivingCreature")
 module.exports = class Gishatich extends LivingCreature {
     constructor(x, y) {
-        super(x,y);
+        super(x, y);
         this.energy = 15;
     }
 
@@ -21,13 +21,15 @@ module.exports = class Gishatich extends LivingCreature {
     chooseCell(ch) {
         this.getNewDirections();
         return super.chooseCell(ch);
-     }
-     
+    }
+
 
     mult() {
         var arr = this.chooseCell(0);
         var empty = arr[Math.round(Math.random() * arr.length)]
         if (empty && this.energy > 15) {
+            gishatichBorn++
+
             var newX = empty[0]
             var newY = empty[1]
             matrix[newY][newX] = 3
