@@ -33,7 +33,7 @@ grassesBorn = 0;
 xotakerBorn = 0;
 gishatichBorn = 0;
 
-weather = ["dzmer", "garun", "amar", "ashun"];
+weather = ["winter", "spring", "summer", "autumn"];
 
 
 grassArr = [];
@@ -94,14 +94,13 @@ function drawServerayin() {
     else if (time % 40 < 40) {
         eghanak = weather[0];
     }
-    console.log(eghanak);
 
 
     for (var i in grassArr) {
-        if (eghanak == "garun" || eghanak == "amar") {
+        if (eghanak == "spring" || eghanak == "summer") {
             grassArr[i].mult(3);
         }
-        else if (eghanak == "ashun" || eghanak == "dzmer") {
+        else if (eghanak == "autumn" || eghanak == "winter") {
             grassArr[i].mult(4);
         }
     }
@@ -111,11 +110,11 @@ function drawServerayin() {
     for (var i in xotakerArr) {
         xotakerArr[i].eat()
         xotakerArr[i].move()
-        if (eghanak == "garun" || eghanak == "amar") {
+        if (eghanak == "spring" || eghanak == "summer") {
             xotakerArr[i].mult(10)
             xotakerArr[i].die(0)
         }
-        else if (eghanak == "ashun" || eghanak == "dzmer") {
+        else if (eghanak == "autumn" || eghanak == "winter") {
             xotakerArr[i].mult(8)
             xotakerArr[i].die(2)
         }
@@ -155,12 +154,3 @@ setInterval(function () {
         if (err) throw err;
     })
 }, 13000);
-
-
-io.on('connection', function (socket) {
-
-    socket.on("stop", function () {
-        clearInterval(a);
-    });
- });
- 

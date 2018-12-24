@@ -3,7 +3,7 @@ var socket = io();
 
 
 
-var eghanak = "dzmer";
+var eghanak = "winter";
 
 var m = 30;
 var n = 30;
@@ -24,18 +24,18 @@ function drawMatrix(arr) {
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
-                if (eghanak == "garun" || eghanak == "amar") {
+                if (eghanak == "spring" || eghanak == "summer") {
                     fill("green");
                 }
-                else if (eghanak == "ashun" || eghanak == "dzmer") {
+                else if (eghanak == "autumn" || eghanak == "winter") {
                     fill("white");
                 }
             }
             else if (matrix[y][x] == 2) {
-                if (eghanak == "garun" || eghanak == "amar") {
+                if (eghanak == "spring" || eghanak == "summer") {
                     fill("yellow");
                 }
-                else if (eghanak == "ashun" || eghanak == "dzmer") {
+                else if (eghanak == "autumn" || eghanak == "winter") {
                     fill("black");
                 }
             }
